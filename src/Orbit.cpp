@@ -19,11 +19,21 @@ Orbit::Orbit(ofVec3f center,
 {
     int nPoints = soundFrames * soundPeriods;
     points.resize(nPoints);
-    cerr << "points.size(): " << points.size() << endl;
+    for (int i = 0; i < nPoints; ++i)
+    {
+        float angle = ((float) i / nPoints) * 360.0;
+        ofVec3f centerOffset;
+        centerOffset.x = cos(angle) * radius;
+        centerOffset.z = sin(angle) * radius;
+        centerOffset.y = 0.0 * radius;
+        points[i] = centerOffset + center;
+    }
 }
 
 
 void Orbit::draw()
 {
-    
+    ofPolyline line;
+    line.addVertices(points);
+    line.draw();
 }
