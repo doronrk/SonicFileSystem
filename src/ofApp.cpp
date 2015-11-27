@@ -5,8 +5,6 @@ using namespace std;
 //--------------------------------------------------------------
 void ofApp::setup(){
     std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/snare";
-//    currentDir = new Directory(initDir);
-//    sounds = currentDir->getSounds();
     
     setDirectory(initDir);
 
@@ -31,18 +29,6 @@ void ofApp::setDirectory(std::string path)
     sounds.clear();
     currentDir = newDir;
     sounds = newSounds;
-    
-    // set position and rotation of sounds
-    int nSounds = sounds.size();
-    
-    for (int i = 0; i < nSounds; ++i)
-    {
-        float yRot = 360.0/nSounds * i;
-        ofVec3f pos = ofVec3f(0, vertOffSet, -sceneRadius);
-        pos = pos.getRotated(yRot, ofVec3f(0, 1, 0));
-        sounds[i]->setPosition(pos);
-        sounds[i]->setYAxisRotation(yRot);
-    }
 }
 
 //--------------------------------------------------------------
@@ -81,49 +67,8 @@ void ofApp::draw(){
     
     ofPushStyle();
     {
-        ofNoFill();
-        ofEnableSmoothing();
-    
-        ofSetColor(255, 255, 255);
-        
-        ofVec3f dir = cam.getLookAtDir();
-        ofVec2f dir2d = ofVec2f(dir.x, dir.z);
-        ofVec2f orthDir = dir2d.getPerpendicular();
-        orthDir = orthDir.normalize();
-        orthDir = orthDir;
-        dir2d = dir2d.normalize();
-        
-        float minProj = INFINITY;
-        
-        // draw sounds, find aimed at sound
-        int nSounds = sounds.size();
-        targetSound = nullptr;
-        for (int i = 0; i < nSounds; ++i)
-        {
-            sounds[i]->draw();
-            ofVec3f soundP = sounds[i]->getPosition();
-            ofVec3f zerodSoundP = soundP - cam.getGlobalPosition();
-            ofVec2f soundP2d = ofVec2f(zerodSoundP.x, zerodSoundP.z);
-            float proj = soundP2d.dot(orthDir);
-            proj = abs(proj);
-            if (proj < minProj && (soundP2d.dot(dir2d) >= 0))
-            {
-                minProj = proj;
-                targetSound = sounds[i];
-            }
-        }
-    
-        // draw selector
-        if (targetSound != nullptr)
-        {
-            ofVec3f p = cam.getGlobalPosition();
-            dir = dir.normalize();
-            dir = dir*100;
-            ofVec3f selectorSource = p + dir;
-            selectorSource.y = vertOffSet;
-            ofVec3f selectorTarget = targetSound->getPosition();
-            selector->draw(selectorSource, selectorTarget);
-        }
+        currentDir->setPosition(ofVec3f(0, 0, 0));
+        currentDir->draw();
     }
     
     ofPopStyle();

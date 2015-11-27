@@ -1,9 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "Entity.h"
 #include "Directory.h"
-#include "Selector.h"
 
 //#define PI 3.14159265
 
@@ -34,7 +32,6 @@ private:
     Directory* currentDir;
     std::vector<Sound*> sounds;
     Sound* targetSound;
-    Selector* selector;
     
     bool upPress;
     bool downPress;

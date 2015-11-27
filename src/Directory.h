@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <boost/filesystem.hpp>
 #include "Sound.h"
+#include "ofMain.h"
+#include "Orbit.h"
 
 class Directory
 {
@@ -20,11 +22,16 @@ public:
     bool isValid();
     std::vector<Directory*> getSubDirs();
     std::vector<Sound*> getSounds();
+    void setPosition(ofVec3f pos);
+    void draw();
 //    std::vector<Sound> getSoundsRecursively();
 
 private:
     void updateFiles();
     
+    
+    ofVec3f position;
+    float radius;
     boost::filesystem::path path;
     std::vector<Directory*> subDirs;
     std::vector<Sound*> sounds;

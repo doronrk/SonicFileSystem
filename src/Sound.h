@@ -13,28 +13,25 @@
 #include <boost/filesystem.hpp>
 #include <sndfile.hh>
 #include "ofMain.h"
+#include "Orbit.h"
 
 class Sound
 {
 public:
-    Sound();
+    Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, ofVec3f dirCenter, float dirRadius);
+
     ~Sound();
-    bool load(boost::filesystem::path p);
     void draw();
-    void setPosition(ofVec3f pos);
-    ofVec3f getPosition();
-    void setYAxisRotation(float rot);
-    float getYAxisRotation();
-    float getDist(ofVec3f p);
     void playSound();
 
 private:
+    void initData(SndfileHandle sndFile);
+    
+    Orbit* orbit;
     ofSoundPlayer* player;
     std::vector<std::vector<float>> data;
     int nChannels;
     int nFrames;
-    ofVec3f position;
-    float yAxisRotation;
 };
 
 #endif /* defined(__SonicFileSystem__Sound__) */
