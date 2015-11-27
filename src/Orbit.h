@@ -22,8 +22,13 @@ public:
           int lfoPeriods,
           float lfoAmp);
     
+    void update(float secondsElapsed);
     void draw();
 private:
     std::vector<ofVec3f> points;
+    // radians per second
+    float angularVelocity;
+    float headAngle;
+    int head;
 };
 #endif /* defined(__SonicFileSystem__Orbit__) */

@@ -4,7 +4,7 @@ using namespace std;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/snare";
+    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/onesnare";
     
     setDirectory(initDir);
 
@@ -15,9 +15,16 @@ void ofApp::setup(){
     cam.end();
     cam.enableMouseInput();
     
+    // audio setup
+    ofSoundStreamSetup(2, 0, 44100, 256, 4);
+    
     // scene setup
     sceneRadius = 500;
     vertOffSet = -40;
+    
+    // variable init
+    globalTimeMS = 0;
+    lastUpdateTime = 0;
 }
 
 //--------------------------------------------------------------
@@ -34,6 +41,16 @@ void ofApp::setDirectory(std::string path)
 //--------------------------------------------------------------
 void ofApp::update()
 {
+    float msElapsed = globalTimeMS - lastUpdateTime;
+    float secondsElapsed = msElapsed / 1000.0;
+    lastUpdateTime = globalTimeMS;
+    
+//    float globalTimeSeconds = globalTimeMS / 1000.0;
+//    cerr << "globalTimeSeconds: " << globalTimeSeconds << endl;
+//    
+    currentDir->update(secondsElapsed);
+    
+    // update camera position
     if (upPress)
     {
         ofVec3f dir = cam.getLookAtDir();
@@ -64,7 +81,6 @@ void ofApp::draw(){
     ofBackground(0, 0, 0);
     cam.begin();
     
-    
     ofPushStyle();
     {
         currentDir->setPosition(ofVec3f(0, 0, 0));
@@ -78,7 +94,8 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::audioOut( ofSoundBuffer& buffer )
 {
-    
+    globalTimeMS = globalTimeMS + buffer.getDurationMicros() / 1000.0;
+    buffer.set(0);
 }
 
 //--------------------------------------------------------------

@@ -21,6 +21,7 @@ public:
     Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, ofVec3f dirCenter, float dirRadius);
 
     ~Sound();
+    void update(float secondsElapsed);
     void draw();
     void playSound();
 

@@ -83,6 +83,17 @@ void Directory::setPosition(ofVec3f pos)
     position = pos;
 }
 
+void Directory::update(float secondsElapsed)
+{
+    sounds = getSounds();
+    for (int i = 0; i < 1; ++i)
+//    for (int i = 0; i < sounds.size(); ++i)
+    {
+        sounds[i]->update(secondsElapsed);
+    }
+}
+
+
 void Directory::draw()
 {
     // draw the sphere repesenting the directory

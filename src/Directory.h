@@ -23,6 +23,7 @@ public:
     std::vector<Directory*> getSubDirs();
     std::vector<Sound*> getSounds();
     void setPosition(ofVec3f pos);
+    void update(float secondsElapsed);
     void draw();
 //    std::vector<Sound> getSoundsRecursively();
 

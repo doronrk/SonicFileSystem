@@ -38,7 +38,9 @@ private:
     bool leftPress;
     bool rightPress;
     
-    
     float sceneRadius = 500;
     float vertOffSet = -40;
+    
+    float globalTimeMS;
+    float lastUpdateTime;
 };

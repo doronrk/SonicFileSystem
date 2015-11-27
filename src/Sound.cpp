@@ -44,6 +44,10 @@ void Sound::initData(SndfileHandle sndFile)
 }
 
 
+void Sound::update(float secondsElapsed)
+{
+    orbit->update(secondsElapsed);
+}
 
 void Sound::draw()
 {
