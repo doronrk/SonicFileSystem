@@ -15,7 +15,7 @@ Sound::Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, ofVec3f
     player = new ofSoundPlayer();
     player->load(sndFilePath.string());
     initData(sndFile);
-    orbit = new Orbit(dirCenter, dirRadius*2, nFrames, 1, 20, 10);
+    orbit = new Orbit(dirCenter, dirRadius*2, nFrames, 5, 20, 5);
 }
 
 Sound::~Sound()
@@ -51,7 +51,8 @@ void Sound::update(float secondsElapsed)
 
 void Sound::draw()
 {
-    orbit->draw();
+    orbit->draw(data[0]);
+//    orbit->drawPath();
 //    ofPushMatrix();
 //        ofTranslate(position);
 //        ofRotate(yAxisRotation, 0, 1.0, 0.0);

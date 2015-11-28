@@ -16,7 +16,7 @@ void ofApp::setup(){
     cam.enableMouseInput();
     
     // audio setup
-    ofSoundStreamSetup(2, 0, 44100, 256, 4);
+    ofSoundStreamSetup(0, 2, 44100, 256, 4);
     
     // scene setup
     sceneRadius = 500;
@@ -25,6 +25,11 @@ void ofApp::setup(){
     // variable init
     globalTimeMS = 0;
     lastUpdateTime = 0;
+}
+
+void ofApp::exit()
+{
+    ofSoundStreamClose();
 }
 
 //--------------------------------------------------------------
@@ -92,7 +97,7 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::audioOut( ofSoundBuffer& buffer )
+void ofApp::audioIn( ofSoundBuffer& buffer )
 {
     globalTimeMS = globalTimeMS + buffer.getDurationMicros() / 1000.0;
     buffer.set(0);

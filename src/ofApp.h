@@ -11,8 +11,9 @@ public:
     void setup();
     void update();
     void draw();
+    void exit();
    
-    void audioOut( ofSoundBuffer& buffer );
+    void audioIn( ofSoundBuffer& buffer );
 
     void keyPressed(int key);
     void keyReleased(int key);

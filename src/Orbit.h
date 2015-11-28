@@ -23,7 +23,8 @@ public:
           float lfoGain);
     
     void update(float secondsElapsed);
-    void draw();
+    void draw(const std::vector<float> data);
+    void drawPath();
 private:
     std::vector<ofVec3f> points;
     // radians per second

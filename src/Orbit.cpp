@@ -37,7 +37,7 @@ Orbit::Orbit(ofVec3f center,
         
         ofVec3f centerOffset;
         centerOffset.x = (cos(angle) * radius) + lfoX;
-        centerOffset.z = (sin(angle) * radius) + lfoZ;
+        centerOffset.z = - (sin(angle) * radius) - lfoZ;
         centerOffset.y = 0.0 * radius;
         points[i] = centerOffset + center;
     }
@@ -58,7 +58,34 @@ void Orbit::update(float secondsElapsed)
     head = round(progress * points.size());
 }
 
-void Orbit::draw()
+void Orbit::draw(const vector<float> data)
+{
+    vector<ofPoint> wavFormPoints;
+    wavFormPoints.resize(data.size());
+    int signOfVelocity;
+    if (angularVelocity < 0)
+    {
+        signOfVelocity = -1;
+    } else
+    {
+        signOfVelocity = 1;
+    }
+    for (int i = 0; i < data.size(); ++i)
+    {
+        float amp = data[i] * 10;
+        int pointIndex = (head + (signOfVelocity * -1) * i);// % points.size();
+        if (pointIndex < 0)
+        {
+            pointIndex = points.size() + pointIndex;
+        }
+        wavFormPoints[i] = points[pointIndex];
+        wavFormPoints[i].y = data[i] * 10.0;
+    }
+    ofPolyline wavForm = ofPolyline(wavFormPoints);
+    wavForm.draw();
+}
+
+void Orbit::drawPath()
 {
     // draw the path
     ofPolyline line;
