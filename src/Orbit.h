@@ -20,7 +20,7 @@ public:
           int soundFrames,
           int soundPeriods,
           int lfoPeriods,
-          float lfoAmp);
+          float lfoGain);
     
     void update(float secondsElapsed);
     void draw();

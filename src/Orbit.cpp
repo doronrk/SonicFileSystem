@@ -15,16 +15,29 @@ Orbit::Orbit(ofVec3f center,
              int soundFrames,
              int soundPeriods,
              int lfoPeriods,
-             float lfoAmp)
+             float lfoGain)
 {
     int nPoints = soundFrames * soundPeriods;
+    float pointsPerLFOPeriod;
+    if (lfoPeriods == 0)
+    {
+        pointsPerLFOPeriod = 1;
+    } else {
+        pointsPerLFOPeriod = (float) nPoints / lfoPeriods;
+    }
     points.resize(nPoints);
     for (int i = 0; i < nPoints; ++i)
     {
         float angle = ((float) i / nPoints) * 2 * PI;
+
+        float lfoInstPhase = ((float) i / pointsPerLFOPeriod) * 2 * PI;
+        float lfoAmp = sin(lfoInstPhase) * lfoGain;
+        float lfoX = lfoAmp * cos(angle);
+        float lfoZ = lfoAmp * sin(angle);
+        
         ofVec3f centerOffset;
-        centerOffset.x = cos(angle) * radius;
-        centerOffset.z = sin(angle) * radius;
+        centerOffset.x = (cos(angle) * radius) + lfoX;
+        centerOffset.z = (sin(angle) * radius) + lfoZ;
         centerOffset.y = 0.0 * radius;
         points[i] = centerOffset + center;
     }
@@ -57,5 +70,5 @@ void Orbit::draw()
     ofSpherePrimitive headSphere;
     headSphere.setPosition(headPos);
     headSphere.setRadius(10);
-    headSphere.draw();
+    headSphere.draw(OF_MESH_WIREFRAME);
 }
