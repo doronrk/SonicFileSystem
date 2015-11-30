@@ -51,9 +51,14 @@ void Sound::update(float secondsElapsed)
 
 void Sound::draw()
 {
-    orbit->draw(data[0]);
-//    orbit->drawTubes(data[0]);
-//    orbit->drawPath();
+    ofPushStyle();
+    {
+        ofColor soundColor;
+        soundColor = soundColor.tomato;
+        ofSetColor(soundColor);
+        orbit->draw(data[0]);
+    }
+    ofPopStyle();
 }
 
 void Sound::playSound()

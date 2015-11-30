@@ -93,6 +93,7 @@ void Directory::update(float secondsElapsed)
     {
         sounds[i]->update(secondsElapsed);
     }
+//    sounds[0]->update(secondsElapsed);
 }
 
 
@@ -110,7 +111,6 @@ void Directory::draw()
         sounds[i]->draw();
     }
 //    sounds[0]->draw();
-
 }
 
 

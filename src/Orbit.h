@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include "ofMain.h"
 
+#define ORBIT_CONST 5000.0
+
 class Orbit
 {
 public:

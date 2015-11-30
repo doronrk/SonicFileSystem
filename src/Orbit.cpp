@@ -10,6 +10,8 @@
 
 using namespace std;
 
+
+
 Orbit::Orbit(ofVec3f center,
              float radius,
              int soundFrames,
@@ -27,9 +29,10 @@ Orbit::Orbit(ofVec3f center,
         pointsPerLFOPeriod = (float) nPoints / lfoPeriods;
     }
     points.resize(nPoints);
+    float phaseOffset = ofRandom(0, 2 * PI);
     for (int i = 0; i < nPoints; ++i)
     {
-        float angle = ((float) i / nPoints) * 2 * PI;
+        float angle = ((float) i / nPoints) * 2 * PI + phaseOffset;
 
         float lfoInstPhase = ((float) i / pointsPerLFOPeriod) * 2 * PI;
         float lfoAmp = sin(lfoInstPhase) * lfoGain;
@@ -43,7 +46,7 @@ Orbit::Orbit(ofVec3f center,
         points[i] = centerOffset + center;
     }
     
-    angularVelocity = -PI/2;
+    angularVelocity = ORBIT_CONST/(radius * radius);
     headAngle = 0.0;
 }
 
