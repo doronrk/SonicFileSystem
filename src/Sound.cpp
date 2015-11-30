@@ -10,12 +10,12 @@
 
 using namespace std;
 
-Sound::Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, ofVec3f dirCenter, float dirRadius)
+Sound::Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, ofVec3f dirCenter, float orbitRadius)
 {    
     player = new ofSoundPlayer();
     player->load(sndFilePath.string());
     initData(sndFile);
-    orbit = new Orbit(dirCenter, dirRadius*3, nFrames, 5, 20, 5);
+    orbit = new Orbit(dirCenter, orbitRadius, nFrames, 5, 20, 5);
 }
 
 Sound::~Sound()

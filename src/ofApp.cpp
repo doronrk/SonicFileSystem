@@ -4,7 +4,7 @@ using namespace std;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/onesnare";
+    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/threesnares";
     
     setDirectory(initDir);
 

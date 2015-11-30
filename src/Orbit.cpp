@@ -43,7 +43,7 @@ Orbit::Orbit(ofVec3f center,
         points[i] = centerOffset + center;
     }
     
-    angularVelocity = -PI/8;
+    angularVelocity = -PI/2;
     headAngle = 0.0;
 }
 

@@ -18,7 +18,7 @@
 class Sound
 {
 public:
-    Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, ofVec3f dirCenter, float dirRadius);
+    Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, ofVec3f dirCenter, float orbitRadius);
 
     ~Sound();
     void update(float secondsElapsed);
