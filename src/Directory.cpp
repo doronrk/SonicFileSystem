@@ -104,31 +104,6 @@ void Directory::draw()
         
     sounds = getSounds();
     sounds[0]->draw();
-    
-//    // draw the orbits of the sounds
-//    float orbitRadius = radius + radius;
-//    // the fraction of the orbit occupied by the wave form
-//    float orbitFrac = 1.0;
-//    // scale factor of amplitude of wave form
-//    float wavHeight = 10;
-//    sounds = getSounds();
-//    std::vector<std::vector<float>> data = sounds[0]->getData();
-//    std::vector<float> points = data[0];
-//    ofBeginShape();
-//    std::cerr << "points.size(): " << points.size() <<  std::endl;
-//    for (int i = 0; i < points.size(); ++i)
-//    {
-////        std::cerr << "i: " << i <<  std::endl;
-//        float angle = i / 360.0;
-//        float x = cos(angle);
-//        float z = sin(angle);
-//        x = x * radius;
-//        z = z * radius;
-//        float y = points[i] * wavHeight;
-//        ofVertex(x, y, z);
-//    }
-//    ofEndShape();
-//    std::cerr << "there" << std::endl;
 }
 
 

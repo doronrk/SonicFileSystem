@@ -24,8 +24,10 @@ public:
     
     void update(float secondsElapsed);
     void draw(const std::vector<float> data);
+    void drawTubes(const std::vector<float> data);
     void drawPath();
 private:
+    ofVec3f center;
     std::vector<ofVec3f> points;
     // radians per second
     float angularVelocity;

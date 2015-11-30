@@ -17,6 +17,7 @@ Orbit::Orbit(ofVec3f center,
              int lfoPeriods,
              float lfoGain)
 {
+    this->center = center;
     int nPoints = soundFrames * soundPeriods;
     float pointsPerLFOPeriod;
     if (lfoPeriods == 0)
@@ -42,7 +43,7 @@ Orbit::Orbit(ofVec3f center,
         points[i] = centerOffset + center;
     }
     
-    angularVelocity = PI/4;
+    angularVelocity = -PI/8;
     headAngle = 0.0;
 }
 
@@ -73,7 +74,7 @@ void Orbit::draw(const vector<float> data)
     for (int i = 0; i < data.size(); ++i)
     {
         float amp = data[i] * 10;
-        int pointIndex = (head + (signOfVelocity * -1) * i);// % points.size();
+        int pointIndex = (head + (signOfVelocity * -1) * i);
         if (pointIndex < 0)
         {
             pointIndex = points.size() + pointIndex;
@@ -85,6 +86,40 @@ void Orbit::draw(const vector<float> data)
     wavForm.draw();
 }
 
+void Orbit::drawTubes(const std::vector<float> data)
+{
+    int signOfVelocity;
+    if (angularVelocity < 0)
+    {
+        signOfVelocity = -1;
+    } else
+    {
+        signOfVelocity = 1;
+    }
+    for (int i = 0; i < data.size(); i = i + 16)
+    {
+        float amp = data[i] * 10;
+        int pointIndex = (head + (signOfVelocity * -1) * i);
+        if (pointIndex < 0)
+        {
+            pointIndex = points.size() + pointIndex;
+        }
+        ofVec3f point = points[pointIndex];
+        
+        ofPushMatrix();
+        {
+            ofNoFill();
+            float rotation = ((float) pointIndex / points.size());
+            rotation = rotation * 360.0;
+            ofTranslate(point);
+            ofRotateY(rotation);
+            ofDrawCircle(ofVec3f(0, 0, 0), data[i] * 10.0);
+        }
+        ofPopMatrix();
+        ofPopMatrix();
+    }
+}
+
 void Orbit::drawPath()
 {
     // draw the path
@@ -94,8 +129,22 @@ void Orbit::drawPath()
     
     // draw the head
     ofVec3f headPos = points[head];
-    ofSpherePrimitive headSphere;
-    headSphere.setPosition(headPos);
-    headSphere.setRadius(10);
-    headSphere.draw(OF_MESH_WIREFRAME);
+    
+    ofPushMatrix();
+    {
+        ofNoFill();
+        float rotation = ((float) head / points.size());
+        rotation = rotation * 360.0;
+        ofTranslate(headPos);
+        ofRotateY(rotation);
+        ofDrawCircle(ofVec3f(0, 0, 0), 10.0);
+    }
+    ofPopMatrix();
+    
+    
+//    
+//    ofSpherePrimitive headSphere;
+//    headSphere.setPosition(headPos);
+//    headSphere.setRadius(10);
+//    headSphere.draw(OF_MESH_WIREFRAME);
 }
