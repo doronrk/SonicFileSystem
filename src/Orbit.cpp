@@ -79,8 +79,11 @@ ofVec3f Orbit::getHeadPosition()
 
 void Orbit::draw(ofVec3f center, const vector<float> data)
 {
-    vector<ofPoint> wavFormPoints;
-    wavFormPoints.resize(data.size());
+    //vector<ofPoint> wavFormPoints;
+//    wavFormPoints.resize(data.size()/skip);
+    int skip = 16;
+    ofPolyline wavForm;
+    wavForm.resize(data.size()/skip);
     int signOfVelocity;
     if (angularVelocity < 0)
     {
@@ -89,11 +92,12 @@ void Orbit::draw(ofVec3f center, const vector<float> data)
     {
         signOfVelocity = 1;
     }
-    for (int i = 0; i < data.size(); ++i)
+//    for (int i = 0; i < data.size() - skip; i = i + skip)
+    for (int i = 0; i < wavForm.size(); ++i)
     {
-        float amp = data[i] * 10;
-        int pointIndex = (head + (signOfVelocity * -1) * i);
-        int previousPointIndex = pointIndex - 1;
+        int dataIndex = i * skip;
+        int pointIndex = (head + (signOfVelocity * -1) * dataIndex);
+        int previousPointIndex = pointIndex - skip;
         if (pointIndex < 0)
         {
             pointIndex = points.size() + pointIndex;
@@ -106,10 +110,9 @@ void Orbit::draw(ofVec3f center, const vector<float> data)
         ofVec3f nextFromCenter= points[previousPointIndex] - fromCenter;
         ofVec3f orth = fromCenter.perpendicular(nextFromCenter);
         float heightFactor = orbitRadius / 8.0;
-        wavFormPoints[i] = points[pointIndex] + orth * data[i] * heightFactor;
-        wavFormPoints[i] = wavFormPoints[i] + center;
+        ofPoint p = points[pointIndex] + orth * data[dataIndex] * heightFactor + center;
+        wavForm[i] = p;
     }
-    ofPolyline wavForm = ofPolyline(wavFormPoints);
     wavForm.draw();
 }
 

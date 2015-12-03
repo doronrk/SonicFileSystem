@@ -4,7 +4,7 @@ using namespace std;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/simple";
+    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/snare";
     
     setDirectory(initDir);
 
@@ -50,13 +50,11 @@ void ofApp::update()
     float msElapsed = globalTimeMS - lastUpdateTime;
     float secondsElapsed = msElapsed / 1000.0;
     lastUpdateTime = globalTimeMS;
-    
-//    float globalTimeSeconds = globalTimeMS / 1000.0;
-//    cerr << "globalTimeSeconds: " << globalTimeSeconds << endl;
-//    
+
     currentDir->update(secondsElapsed, 0);
     
     // update camera position
+    
     if (upPress)
     {
         ofVec3f dir = cam.getLookAtDir();

@@ -12,11 +12,12 @@ using namespace std;
 
 Sound::Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath,
              float orbitRadius, float angularVelocity)
-{    
+{
+    dataInitialized = false;
     player = new ofSoundPlayer();
     player->load(sndFilePath.string());
-    initData(sndFile);
     float lfoGain = orbitRadius/100.0;
+    initData(sndFile);
     orbit = new Orbit(orbitRadius, angularVelocity, nFrames, 5, 20, lfoGain);
 }
 
@@ -43,6 +44,7 @@ void Sound::initData(SndfileHandle sndFile)
             data[channelNum][frameNum] = buffer[i];
         }
     }
+    dataInitialized = true;
 }
 
 
@@ -58,12 +60,17 @@ void Sound::update(float secondsElapsed)
 
 void Sound::draw(ofVec3f dirCenter)
 {
+    if (! dataInitialized)
+    {
+        return;
+    }
     ofPushStyle();
     {
         ofColor soundColor;
         soundColor = soundColor.tomato;
         ofSetColor(soundColor);
-        orbit->draw(dirCenter, data[0]);
+        vector<float> d = data[0];
+        orbit->draw(dirCenter, d);
     }
     ofPopStyle();
 }

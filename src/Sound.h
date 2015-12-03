@@ -35,6 +35,7 @@ private:
     std::vector<std::vector<float>> data;
     int nChannels;
     int nFrames;
+    bool dataInitialized;
 };
 
 #endif /* defined(__SonicFileSystem__Sound__) */
