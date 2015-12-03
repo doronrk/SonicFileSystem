@@ -21,8 +21,6 @@ void ofApp::setup(){
     // scene setup
     sceneRadius = 500;
     vertOffSet = -40;
-//    ofSetBackgroundAuto(true);
-//    ofSetDepthTest(true);
     background = ofImage("/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/bin/data/stars.jpg");
     
     // variable init
@@ -38,7 +36,7 @@ void ofApp::exit()
 //--------------------------------------------------------------
 void ofApp::setDirectory(std::string path)
 {
-    Directory* newDir = new Directory(path);
+    Directory* newDir = new Directory(path, 50, 0.0);
     std::vector<Sound*> newSounds = newDir->getSounds();
     delete currentDir;
     sounds.clear();
@@ -93,7 +91,6 @@ void ofApp::draw(){
     
     ofPushStyle();
     {
-        currentDir->setPosition(ofVec3f(0, 0, 0));
         currentDir->draw();
     }
     

@@ -18,11 +18,11 @@
 class Sound
 {
 public:
-    Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, ofVec3f dirCenter, float orbitRadius);
+    Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, float orbitRadius);
 
     ~Sound();
     void update(float secondsElapsed);
-    void draw();
+    void draw(ofVec3f dirCenter);
     void drawOrbit();
     void playSound();
 

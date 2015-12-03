@@ -10,12 +10,14 @@
 
 using namespace boost::filesystem;
 
-Directory::Directory(boost::filesystem::path p)
+Directory::Directory(boost::filesystem::path p, float sphereRad, float orbitRadius)
 {
     path = p;
     filesCached = false;
-    radius = 50;
+    sphereRadius = sphereRad;
     selectedSound = nullptr;
+    orbit = new Orbit(orbitRadius, 10000, 1, 0, 0.0);
+    center = ofVec3f(0, 0, 0);
 }
 
 bool Directory::isValid()
@@ -56,10 +58,12 @@ void Directory::updateFiles()
         boost::filesystem::file_status stat = itr->status();
         if (is_directory(stat))
         {
-            Directory* dir = new Directory(p);
+            float orbitRadius = sphereRadius + (sphereRadius/3.0) * (i + 1);
+            Directory* dir = new Directory(p, sphereRadius/3.0, orbitRadius);
             if (dir->isValid())
             {
                 subDirs.push_back(dir);
+                i = i + 1;
             } else
             {
                 delete dir;
@@ -71,8 +75,8 @@ void Directory::updateFiles()
             int error = myf.error();
             if (error == 0)
             {
-                float orbitRadius = radius + (radius/3.0) * (i + 1);
-                Sound* s = new Sound(myf, p, position, orbitRadius);
+                float orbitRadius = sphereRadius + (sphereRadius/3.0) * (i + 1);
+                Sound* s = new Sound(myf, p, orbitRadius);
                 sounds.push_back(s);
                 i = i + 1;
             }
@@ -81,35 +85,45 @@ void Directory::updateFiles()
     filesCached = true;
 }
 
-void Directory::setPosition(ofVec3f pos)
-{
-    position = pos;
-}
-
 void Directory::update(float secondsElapsed)
 {
     sounds = getSounds();
+    subDirs = getSubDirs();
+    orbit->update(secondsElapsed);
     for (int i = 0; i < sounds.size(); ++i)
     {
         sounds[i]->update(secondsElapsed);
+    }
+    for (int i = 0; i < subDirs.size(); ++i)
+    {
+        subDirs[i]->update(secondsElapsed);
     }
 }
 
 
 void Directory::draw()
 {
+    
+    sounds = getSounds();
+    subDirs = getSubDirs();
+
     // draw the sphere repesenting the directory
+    ofVec3f position = orbit->getHeadPosition();
     ofSpherePrimitive sphere = ofSpherePrimitive();
     sphere.setPosition(position);
-    sphere.setRadius(radius);
+    sphere.setRadius(sphereRadius);
     sphere.draw(OF_MESH_WIREFRAME);
-        
-    sounds = getSounds();
+    
+    
     for (int i = 0; i < sounds.size(); ++i)
     {
-        sounds[i]->draw();
-//        sounds[i]->drawOrbit();
+        sounds[i]->draw(position);
     }
+    for (int i = 0; i < subDirs.size(); ++i)
+    {
+        subDirs[i]->draw();
+    }
+    
     
     if (selectedSound != nullptr)
     {

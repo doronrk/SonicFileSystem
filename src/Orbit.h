@@ -17,21 +17,19 @@
 class Orbit
 {
 public:
-    Orbit(ofVec3f center,
-          float radius,
+    Orbit(float radius,
           int soundFrames,
           int soundPeriods,
           int lfoPeriods,
           float lfoGain);
     
     void update(float secondsElapsed);
-    void draw(const std::vector<float> data);
+    void draw(ofVec3f center, const std::vector<float> data);
     void drawTubes(const std::vector<float> data);
     void drawPath();
     bool getAndResetCrossedZero();
     ofVec3f getHeadPosition();
 private:
-    ofVec3f center;
     std::vector<ofVec3f> points;
     // radians per second
     float angularVelocity;

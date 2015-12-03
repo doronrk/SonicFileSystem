@@ -18,21 +18,19 @@
 class Directory
 {
 public:
-    Directory(boost::filesystem::path path);
+    Directory(boost::filesystem::path path, float sphereRadius, float orbitRadius);
     bool isValid();
     std::vector<Directory*> getSubDirs();
     std::vector<Sound*> getSounds();
-    void setPosition(ofVec3f pos);
     void update(float secondsElapsed);
     void draw();
     
-//    std::vector<Sound> getSoundsRecursively();
-
 private:
     void updateFiles();
     
-    ofVec3f position;
-    float radius;
+    ofVec3f center;
+    Orbit* orbit;
+    float sphereRadius;
     boost::filesystem::path path;
     std::vector<Directory*> subDirs;
     Sound* selectedSound;
