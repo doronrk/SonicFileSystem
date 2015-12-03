@@ -25,16 +25,17 @@ public:
     void setPosition(ofVec3f pos);
     void update(float secondsElapsed);
     void draw();
+    
 //    std::vector<Sound> getSoundsRecursively();
 
 private:
     void updateFiles();
     
-    
     ofVec3f position;
     float radius;
     boost::filesystem::path path;
     std::vector<Directory*> subDirs;
+    Sound* selectedSound;
     std::vector<Sound*> sounds;
     bool filesCached;
 };

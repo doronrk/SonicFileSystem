@@ -47,6 +47,11 @@ void Sound::initData(SndfileHandle sndFile)
 void Sound::update(float secondsElapsed)
 {
     orbit->update(secondsElapsed);
+    bool crossedZero = orbit->getAndResetCrossedZero();
+    if (crossedZero)
+    {
+        player->play();
+    }
 }
 
 void Sound::draw()
@@ -59,6 +64,11 @@ void Sound::draw()
         orbit->draw(data[0]);
     }
     ofPopStyle();
+}
+
+void Sound::drawOrbit()
+{
+    orbit->drawPath();
 }
 
 void Sound::playSound()

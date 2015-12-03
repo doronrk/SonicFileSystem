@@ -28,6 +28,7 @@ public:
     void draw(const std::vector<float> data);
     void drawTubes(const std::vector<float> data);
     void drawPath();
+    bool getAndResetCrossedZero();
 private:
     ofVec3f center;
     std::vector<ofVec3f> points;
@@ -35,5 +36,6 @@ private:
     float angularVelocity;
     float headAngle;
     int head;
+    bool crossedZero;
 };
 #endif /* defined(__SonicFileSystem__Orbit__) */

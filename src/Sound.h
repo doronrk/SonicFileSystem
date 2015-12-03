@@ -23,6 +23,7 @@ public:
     ~Sound();
     void update(float secondsElapsed);
     void draw();
+    void drawOrbit();
     void playSound();
 
 private:

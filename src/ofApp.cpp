@@ -21,6 +21,9 @@ void ofApp::setup(){
     // scene setup
     sceneRadius = 500;
     vertOffSet = -40;
+//    ofSetBackgroundAuto(true);
+//    ofSetDepthTest(true);
+    background = ofImage("/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/bin/data/stars.jpg");
     
     // variable init
     globalTimeMS = 0;
@@ -82,8 +85,9 @@ void ofApp::update()
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
-    ofBackground(0, 0, 0);
+    ofEnableSmoothing();
+    //ofBackground(0, 0, 0);
+    background.draw(0, 0);
     cam.begin();
     
     ofPushStyle();

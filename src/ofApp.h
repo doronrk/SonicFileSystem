@@ -27,7 +27,7 @@ public:
     
 private:
     void setDirectory(std::string path);
-    
+    ofImage background;
     
     ofEasyCam cam;
     Directory* currentDir;

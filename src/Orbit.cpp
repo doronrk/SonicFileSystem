@@ -11,7 +11,6 @@
 using namespace std;
 
 
-
 Orbit::Orbit(ofVec3f center,
              float radius,
              int soundFrames,
@@ -48,6 +47,7 @@ Orbit::Orbit(ofVec3f center,
     
     angularVelocity = ORBIT_CONST/(radius * radius);
     headAngle = 0.0;
+    crossedZero = false;
 }
 
 void Orbit::update(float secondsElapsed)
@@ -57,9 +57,17 @@ void Orbit::update(float secondsElapsed)
     if (headAngle > (2 * PI))
     {
         headAngle = headAngle - (2 * PI);
+        crossedZero = true;
     }
     float progress = headAngle / (2 * PI);
     head = round(progress * points.size());
+}
+
+bool Orbit::getAndResetCrossedZero()
+{
+    bool oldValue = crossedZero;
+    crossedZero = false;
+    return oldValue;
 }
 
 void Orbit::draw(const vector<float> data)

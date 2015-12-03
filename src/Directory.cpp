@@ -15,6 +15,7 @@ Directory::Directory(boost::filesystem::path p)
     path = p;
     filesCached = false;
     radius = 50;
+    selectedSound = nullptr;
 }
 
 bool Directory::isValid()
@@ -47,7 +48,6 @@ std::vector<Sound*> Directory::getSounds()
 
 void Directory::updateFiles()
 {
-    std::cerr << "updateFiles called" << std::endl;
     directory_iterator end_itr;
     int i = 0;
     for ( directory_iterator itr( path ); itr != end_itr; ++itr )
@@ -74,9 +74,9 @@ void Directory::updateFiles()
                 float orbitRadius = radius + (radius/2.0) * (i + 1);
                 Sound* s = new Sound(myf, p, position, orbitRadius);
                 sounds.push_back(s);
+                i = i + 1;
             }
         }
-        i = i + 1;
     }
     filesCached = true;
 }
@@ -93,7 +93,6 @@ void Directory::update(float secondsElapsed)
     {
         sounds[i]->update(secondsElapsed);
     }
-//    sounds[0]->update(secondsElapsed);
 }
 
 
@@ -110,7 +109,11 @@ void Directory::draw()
     {
         sounds[i]->draw();
     }
-//    sounds[0]->draw();
+    
+    if (selectedSound != nullptr)
+    {
+        selectedSound->drawOrbit();
+    }
 }
 
 
