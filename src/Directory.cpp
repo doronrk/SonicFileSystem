@@ -71,7 +71,7 @@ void Directory::updateFiles()
             int error = myf.error();
             if (error == 0)
             {
-                float orbitRadius = radius + (radius/2.0) * (i + 1);
+                float orbitRadius = radius + (radius/3.0) * (i + 1);
                 Sound* s = new Sound(myf, p, position, orbitRadius);
                 sounds.push_back(s);
                 i = i + 1;
@@ -108,6 +108,7 @@ void Directory::draw()
     for (int i = 0; i < sounds.size(); ++i)
     {
         sounds[i]->draw();
+//        sounds[i]->drawOrbit();
     }
     
     if (selectedSound != nullptr)

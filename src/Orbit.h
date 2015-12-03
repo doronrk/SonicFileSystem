@@ -29,6 +29,7 @@ public:
     void drawTubes(const std::vector<float> data);
     void drawPath();
     bool getAndResetCrossedZero();
+    ofVec3f getHeadPosition();
 private:
     ofVec3f center;
     std::vector<ofVec3f> points;

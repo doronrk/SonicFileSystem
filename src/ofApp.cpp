@@ -86,8 +86,9 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofEnableSmoothing();
-    //ofBackground(0, 0, 0);
-    background.draw(0, 0);
+    ofBackground(0, 0, 0);
+    //background.draw(0, 0);
+    ofSetDepthTest(true);
     cam.begin();
     
     ofPushStyle();

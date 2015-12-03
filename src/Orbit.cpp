@@ -19,6 +19,7 @@ Orbit::Orbit(ofVec3f center,
              float lfoGain)
 {
     this->center = center;
+    float tilt = ofRandom(-1, 1);
     int nPoints = soundFrames * soundPeriods;
     float pointsPerLFOPeriod;
     if (lfoPeriods == 0)
@@ -41,7 +42,8 @@ Orbit::Orbit(ofVec3f center,
         ofVec3f centerOffset;
         centerOffset.x = (cos(angle) * radius) + lfoX;
         centerOffset.z = - (sin(angle) * radius) - lfoZ;
-        centerOffset.y = 0.0 * radius;
+        centerOffset.y = tilt * centerOffset.x;
+//        cerr << "centerOffset.y: " << centerOffset.y << endl;
         points[i] = centerOffset + center;
     }
     
@@ -70,6 +72,11 @@ bool Orbit::getAndResetCrossedZero()
     return oldValue;
 }
 
+ofVec3f Orbit::getHeadPosition()
+{
+    return points[head];
+}
+
 void Orbit::draw(const vector<float> data)
 {
     vector<ofPoint> wavFormPoints;
@@ -86,12 +93,22 @@ void Orbit::draw(const vector<float> data)
     {
         float amp = data[i] * 10;
         int pointIndex = (head + (signOfVelocity * -1) * i);
+        int previousPointIndex = pointIndex - 1;
         if (pointIndex < 0)
         {
             pointIndex = points.size() + pointIndex;
         }
-        wavFormPoints[i] = points[pointIndex];
-        wavFormPoints[i].y = data[i] * 10.0;
+        if (previousPointIndex < 0)
+        {
+            previousPointIndex = points.size() + previousPointIndex;
+        }
+//        wavFormPoints[i] = points[pointIndex];
+        
+        ofVec3f fromCenter = points[pointIndex] - center;
+        ofVec3f nextFromCenter= points[previousPointIndex] - fromCenter;
+        ofVec3f orth = fromCenter.perpendicular(nextFromCenter);
+        //wavFormPoints[i].y = wavFormPoints[i].y + data[i] * 10.0;
+        wavFormPoints[i] = points[pointIndex] + orth * data[i] * 10.0;
     }
     ofPolyline wavForm = ofPolyline(wavFormPoints);
     wavForm.draw();
