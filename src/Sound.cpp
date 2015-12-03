@@ -10,12 +10,14 @@
 
 using namespace std;
 
-Sound::Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, float orbitRadius)
+Sound::Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath,
+             float orbitRadius, float angularVelocity)
 {    
     player = new ofSoundPlayer();
     player->load(sndFilePath.string());
     initData(sndFile);
-    orbit = new Orbit(orbitRadius, nFrames, 5, 20, 5);
+    float lfoGain = orbitRadius/100.0;
+    orbit = new Orbit(orbitRadius, angularVelocity, nFrames, 5, 20, lfoGain);
 }
 
 Sound::~Sound()
@@ -50,7 +52,7 @@ void Sound::update(float secondsElapsed)
     bool crossedZero = orbit->getAndResetCrossedZero();
     if (crossedZero)
     {
-        player->play();
+        //player->play();
     }
 }
 

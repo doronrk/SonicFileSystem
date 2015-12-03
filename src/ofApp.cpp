@@ -4,7 +4,7 @@ using namespace std;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/snare";
+    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/simple";
     
     setDirectory(initDir);
 
@@ -36,7 +36,7 @@ void ofApp::exit()
 //--------------------------------------------------------------
 void ofApp::setDirectory(std::string path)
 {
-    Directory* newDir = new Directory(path, 50, 0.0);
+    Directory* newDir = new Directory(path, 50, 0.0, 0.0);
     std::vector<Sound*> newSounds = newDir->getSounds();
     delete currentDir;
     sounds.clear();
@@ -54,7 +54,7 @@ void ofApp::update()
 //    float globalTimeSeconds = globalTimeMS / 1000.0;
 //    cerr << "globalTimeSeconds: " << globalTimeSeconds << endl;
 //    
-    currentDir->update(secondsElapsed);
+    currentDir->update(secondsElapsed, 0);
     
     // update camera position
     if (upPress)
@@ -91,7 +91,7 @@ void ofApp::draw(){
     
     ofPushStyle();
     {
-        currentDir->draw();
+        currentDir->draw(ofVec3f(0, 0, 0), 0);
     }
     
     ofPopStyle();

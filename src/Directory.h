@@ -18,12 +18,13 @@
 class Directory
 {
 public:
-    Directory(boost::filesystem::path path, float sphereRadius, float orbitRadius);
+    Directory(boost::filesystem::path path, float sphereRadius, float orbitRadius,
+              float angularVelocity);
     bool isValid();
     std::vector<Directory*> getSubDirs();
     std::vector<Sound*> getSounds();
-    void update(float secondsElapsed);
-    void draw();
+    void update(float secondsElapsed, int depth);
+    void draw(ofVec3f center, int depth);
     
 private:
     void updateFiles();
@@ -31,11 +32,14 @@ private:
     ofVec3f center;
     Orbit* orbit;
     float sphereRadius;
+    float orbitRadius;
     boost::filesystem::path path;
     std::vector<Directory*> subDirs;
     Sound* selectedSound;
     std::vector<Sound*> sounds;
     bool filesCached;
+    
+    int maxDepth = 2;
 };
 
 #endif /* defined(__SonicFileSystem__Directory__) */

@@ -18,7 +18,8 @@
 class Sound
 {
 public:
-    Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, float orbitRadius);
+    Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, float orbitRadius,
+          float angularVelocity);
 
     ~Sound();
     void update(float secondsElapsed);

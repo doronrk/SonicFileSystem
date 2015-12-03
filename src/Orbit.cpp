@@ -12,11 +12,14 @@ using namespace std;
 
 
 Orbit::Orbit(float radius,
+             float angularVel,
              int soundFrames,
              int soundPeriods,
              int lfoPeriods,
              float lfoGain)
 {
+    orbitRadius = radius;
+    angularVelocity = angularVel;
     float tilt = ofRandom(-1, 1);
     int nPoints = soundFrames * soundPeriods;
     float pointsPerLFOPeriod;
@@ -44,7 +47,7 @@ Orbit::Orbit(float radius,
         points[i] = centerOffset;
     }
     
-    angularVelocity = ORBIT_CONST/(radius * radius);
+    //angularVelocity = ORBIT_CONST/(radius * radius);
     headAngle = 0.0;
     crossedZero = false;
 }
@@ -102,7 +105,8 @@ void Orbit::draw(ofVec3f center, const vector<float> data)
         ofVec3f fromCenter = points[pointIndex] - center;
         ofVec3f nextFromCenter= points[previousPointIndex] - fromCenter;
         ofVec3f orth = fromCenter.perpendicular(nextFromCenter);
-        wavFormPoints[i] = points[pointIndex] + orth * data[i] * 10.0;
+        float heightFactor = orbitRadius / 8.0;
+        wavFormPoints[i] = points[pointIndex] + orth * data[i] * heightFactor;
         wavFormPoints[i] = wavFormPoints[i] + center;
     }
     ofPolyline wavForm = ofPolyline(wavFormPoints);

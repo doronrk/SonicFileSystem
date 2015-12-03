@@ -18,6 +18,7 @@ class Orbit
 {
 public:
     Orbit(float radius,
+          float angularVelocity,
           int soundFrames,
           int soundPeriods,
           int lfoPeriods,
@@ -30,6 +31,7 @@ public:
     bool getAndResetCrossedZero();
     ofVec3f getHeadPosition();
 private:
+    float orbitRadius;
     std::vector<ofVec3f> points;
     // radians per second
     float angularVelocity;
