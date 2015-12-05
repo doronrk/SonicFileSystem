@@ -148,6 +148,7 @@ void ofApp::keyReleased(int key)
         {
             string text = textBox.getText();
             handleTextInput(text);
+            textBox.clear();
         } else {
             textBox.keyPressed(key);
         }
@@ -212,16 +213,21 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 void ofApp::handleTextInput(string text)
 {
-    int l = text.find("mv ");
-    if (l == 0)
+    int length = text.size();
+    if (length < 4)
     {
-        cerr << "mv found" << endl;
+        cerr << "no match" << endl;
         return;
     }
-    l = text.find("cd ");
+    string suffix = text.substr(3, length);
+    int l = text.find("cd ");
     if (l == 0)
     {
-        cerr << "cd found" << endl;
+        Directory* newDir = currentDir->getSubDir(suffix);
+        if (newDir != nullptr)
+        {
+            currentDir = newDir;
+        }
         return;
     }
     l = text.find("pl ");
@@ -230,5 +236,6 @@ void ofApp::handleTextInput(string text)
         cerr << "pl found" << endl;
         return;
     }
+    cerr << "no match" << endl;
 }
 
