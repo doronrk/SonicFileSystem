@@ -19,7 +19,7 @@ class Sound
 {
 public:
     Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, float orbitRadius,
-          float angularVelocity);
+          float angularVelocity, std::string displayName);
 
     ~Sound();
     void update(float secondsElapsed);
@@ -29,7 +29,7 @@ public:
 
 private:
     void initData(SndfileHandle sndFile);
-    
+    std::string displayName;
     Orbit* orbit;
     ofSoundPlayer* player;
     std::vector<std::vector<float>> data;

@@ -11,8 +11,9 @@
 using namespace std;
 
 Sound::Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath,
-             float orbitRadius, float angularVelocity)
+             float orbitRadius, float angularVelocity, std::string dispName)
 {
+    displayName = dispName;
     dataInitialized = false;
     player = new ofSoundPlayer();
     player->load(sndFilePath.string());
@@ -66,9 +67,9 @@ void Sound::draw(ofVec3f dirCenter)
     }
     ofPushStyle();
     {
-        ofColor soundColor;
-        soundColor = soundColor.tomato;
-        ofSetColor(soundColor);
+        //ofColor soundColor;
+        //soundColor = soundColor.tomato;
+        //ofSetColor(soundColor);
         vector<float> d = data[0];
         orbit->draw(dirCenter, d);
     }

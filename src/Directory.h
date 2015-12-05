@@ -25,16 +25,20 @@ public:
     std::vector<Sound*> getSounds();
     void update(float secondsElapsed, int depth);
     void draw(ofVec3f center, int depth);
+    std::string getDisplayname();
     
 private:
     void updateFiles();
     
+    ofColor color;
     ofVec3f center;
     Orbit* orbit;
     float sphereRadius;
     float orbitRadius;
     boost::filesystem::path path;
-    std::vector<Directory*> subDirs;
+    std::string displayName;
+    std::map<std::string, Directory*> subDirMap;
+    //std::vector<Directory*> subDirs;
     Sound* selectedSound;
     std::vector<Sound*> sounds;
     bool filesCached;
