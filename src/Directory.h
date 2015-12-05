@@ -29,6 +29,7 @@ public:
     void drawSatNames();
     std::string getDisplayname();
     Directory* getSubDir(std::string displayName);
+    void playSound(std::string displayName);
     Directory* getParent();
     ofVec3f getPosition();
     float getOuterRadius();
@@ -45,9 +46,9 @@ private:
     boost::filesystem::path path;
     std::string displayName;
     std::map<std::string, Directory*> subDirMap;
-    //std::vector<Directory*> subDirs;
+    std::map<std::string, Sound*> soundMap;
     Sound* selectedSound;
-    std::vector<Sound*> sounds;
+    //std::vector<Sound*> sounds;
     bool filesCached;
     
     float radiusConst;

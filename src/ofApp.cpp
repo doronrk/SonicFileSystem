@@ -253,7 +253,7 @@ void ofApp::handleTextInput(string text)
     l = text.find("pl ");
     if (l == 0)
     {
-        cerr << "pl found" << endl;
+        currentDir->playSound(suffix);
         return;
     }
     cerr << "no match" << endl;

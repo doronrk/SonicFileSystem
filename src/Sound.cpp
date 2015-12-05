@@ -52,11 +52,6 @@ void Sound::initData(SndfileHandle sndFile)
 void Sound::update(float secondsElapsed)
 {
     orbit->update(secondsElapsed);
-    bool crossedZero = orbit->getAndResetCrossedZero();
-    if (crossedZero)
-    {
-        //player->play();
-    }
 }
 
 void Sound::draw(ofVec3f dirCenter, int depth, bool dispNamesOn)
@@ -85,5 +80,5 @@ void Sound::drawOrbit()
 
 void Sound::playSound()
 {
-    //player->play();
+    player->play();
 }

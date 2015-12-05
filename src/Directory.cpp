@@ -56,6 +56,17 @@ Directory* Directory::getSubDir(std::string dispname)
     }
 }
 
+void Directory::playSound(std::string dispname)
+{
+    std::map<std::string,Sound*>::iterator it;
+    it = soundMap.find(dispname);
+    if (it != soundMap.end())
+    {
+        Sound* soundToPlay = it->second;
+        soundToPlay->playSound();
+    }
+}
+
 ofVec3f Directory::getPosition()
 {
     if (parent == nullptr)
@@ -88,6 +99,10 @@ std::vector<Sound*> Directory::getSounds()
     if (isValid() && ! filesCached)
     {
         updateFiles();
+    }
+    vector<Sound*> sounds;
+    for(map<std::string,Sound*>::iterator it = soundMap.begin(); it != soundMap.end(); ++it) {
+        sounds.push_back(it->second);
     }
     return sounds;
 }
@@ -136,7 +151,7 @@ void Directory::updateFiles()
             if (error == 0)
             {
                 Sound* s = new Sound(myf, p, orbitRadius, angularVelocity, p.filename().string());
-                sounds.push_back(s);
+                soundMap.insert(std::pair<std::string, Sound*>(p.filename().string(), s));
                 i = i + 1;
             }
         }
@@ -151,7 +166,7 @@ void Directory::update(float secondsElapsed, int depth)
     {
         return;
     }
-    sounds = getSounds();
+    std::vector<Sound*> sounds = getSounds();
     std::vector<Directory*> subDirs = getSubDirs();
     orbit->update(secondsElapsed);
     for (int i = 0; i < sounds.size(); ++i)
@@ -179,7 +194,7 @@ void Directory::draw(ofVec3f center, int depth, bool dispNamesOn)
     ofPushStyle();
     {
         ofSetColor(color);
-        sounds = getSounds();
+        std::vector<Sound*> sounds = getSounds();
         std::vector<Directory*> subDirs = getSubDirs();
 
         // draw the sphere repesenting the directory
@@ -244,7 +259,7 @@ void Directory::drawSatNames()
     ofVec3f position = orbit->getHeadPosition();
     position = position + center;
     
-    sounds = getSounds();
+    std::vector<Sound*> sounds = getSounds();
     for (int i = 0; i < sounds.size(); ++i)
     {
         sounds[i]->drawName(position);
