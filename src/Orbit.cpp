@@ -79,8 +79,6 @@ ofVec3f Orbit::getHeadPosition()
 
 void Orbit::draw(ofVec3f center, const vector<float> data)
 {
-    //vector<ofPoint> wavFormPoints;
-//    wavFormPoints.resize(data.size()/skip);
     int skip = 16;
     ofPolyline wavForm;
     wavForm.resize(data.size()/skip);
@@ -92,7 +90,6 @@ void Orbit::draw(ofVec3f center, const vector<float> data)
     {
         signOfVelocity = 1;
     }
-//    for (int i = 0; i < data.size() - skip; i = i + skip)
     for (int i = 0; i < wavForm.size(); ++i)
     {
         int dataIndex = i * skip;
