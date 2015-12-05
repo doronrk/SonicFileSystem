@@ -129,7 +129,7 @@ void Directory::update(float secondsElapsed, int depth)
 }
 
 
-void Directory::draw(ofVec3f center, int depth)
+void Directory::draw(ofVec3f center, int depth, bool dispNamesOn)
 {
     if (depth > maxDepth)
     {
@@ -149,14 +149,13 @@ void Directory::draw(ofVec3f center, int depth)
         sphere.setRadius(sphereRadius);
         sphere.draw(OF_MESH_WIREFRAME);
         
-        
         for (int i = 0; i < sounds.size(); ++i)
         {
-            sounds[i]->draw(position);
+            sounds[i]->draw(position, depth, dispNamesOn);
         }
         for (int i = 0; i < subDirs.size(); ++i)
         {
-            subDirs[i]->draw(position, depth + 1);
+            subDirs[i]->draw(position, depth + 1, dispNamesOn);
         }
         
         

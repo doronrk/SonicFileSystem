@@ -26,6 +26,7 @@ void ofApp::setup(){
     // variable init
     globalTimeMS = 0;
     lastUpdateTime = 0;
+    dispNamesOn = false;
 }
 
 void ofApp::exit()
@@ -89,7 +90,7 @@ void ofApp::draw(){
     
     ofPushStyle();
     {
-        currentDir->draw(ofVec3f(0, 0, 0), 0);
+        currentDir->draw(ofVec3f(0, 0, 0), 0, dispNamesOn);
     }
     
     ofPopStyle();
@@ -138,12 +139,10 @@ void ofApp::keyReleased(int key)
         rightPress = false;
     } else if (key == 'r')
     {
-        if (targetSound != nullptr)
-        {
-            targetSound->playSound();
-        }
+        dispNamesOn = !dispNamesOn;
     }
 }
+
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){

@@ -24,7 +24,7 @@ public:
     std::vector<Directory*> getSubDirs();
     std::vector<Sound*> getSounds();
     void update(float secondsElapsed, int depth);
-    void draw(ofVec3f center, int depth);
+    void draw(ofVec3f center, int depth, bool dispNamesOn);
     std::string getDisplayname();
     
 private:

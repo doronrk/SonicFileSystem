@@ -25,7 +25,9 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+    
 private:
+    
     void setDirectory(std::string path);
     ofImage background;
     
@@ -34,6 +36,7 @@ private:
     std::vector<Sound*> sounds;
     Sound* targetSound;
     
+    bool dispNamesOn;
     bool upPress;
     bool downPress;
     bool leftPress;

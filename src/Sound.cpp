@@ -59,7 +59,7 @@ void Sound::update(float secondsElapsed)
     }
 }
 
-void Sound::draw(ofVec3f dirCenter)
+void Sound::draw(ofVec3f dirCenter, int depth, bool dispNamesOn)
 {
     if (! dataInitialized)
     {
@@ -67,11 +67,8 @@ void Sound::draw(ofVec3f dirCenter)
     }
     ofPushStyle();
     {
-        //ofColor soundColor;
-        //soundColor = soundColor.tomato;
-        //ofSetColor(soundColor);
         vector<float> d = data[0];
-        orbit->draw(dirCenter, d);
+        orbit->draw(dirCenter, d, displayName, depth, dispNamesOn);
     }
     ofPopStyle();
 }

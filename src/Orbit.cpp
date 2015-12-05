@@ -77,7 +77,7 @@ ofVec3f Orbit::getHeadPosition()
     return points[head];
 }
 
-void Orbit::draw(ofVec3f center, const vector<float> data)
+void Orbit::draw(ofVec3f center, const vector<float> data, std::string displayname, int depth, bool dispNamesOn)
 {
     int skip = 16;
     ofPolyline wavForm;
@@ -90,6 +90,7 @@ void Orbit::draw(ofVec3f center, const vector<float> data)
     {
         signOfVelocity = 1;
     }
+    float heightFactor = orbitRadius / 8.0;
     for (int i = 0; i < wavForm.size(); ++i)
     {
         int dataIndex = i * skip;
@@ -106,11 +107,21 @@ void Orbit::draw(ofVec3f center, const vector<float> data)
         ofVec3f fromCenter = points[pointIndex] - center;
         ofVec3f nextFromCenter= points[previousPointIndex] - fromCenter;
         ofVec3f orth = fromCenter.perpendicular(nextFromCenter);
-        float heightFactor = orbitRadius / 8.0;
         ofPoint p = points[pointIndex] + orth * data[dataIndex] * heightFactor + center;
         wavForm[i] = p;
     }
     wavForm.draw();
+    if (depth == 0 && dispNamesOn)
+    {
+        ofVec3f headPoint = points[head];
+        ofPushMatrix();
+        {
+            ofTranslate(headPoint + center);
+            ofDrawBitmapString(displayname, 0, 0 );
+
+        }
+        ofPopMatrix();
+    }
 }
 
 void Orbit::drawTubes(const std::vector<float> data)

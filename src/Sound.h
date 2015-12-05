@@ -23,7 +23,7 @@ public:
 
     ~Sound();
     void update(float secondsElapsed);
-    void draw(ofVec3f dirCenter);
+    void draw(ofVec3f dirCenter, int depth, bool dispNamesOn);
     void drawOrbit();
     void playSound();
 
