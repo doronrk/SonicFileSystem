@@ -12,6 +12,8 @@
 	<dict>
 		<key>2DE9C8846D9375EAACFABA8963120E8E7719BAF5</key>
 		<string>https://github.com/openframeworks/openFrameworks.git</string>
+		<key>A6343E16BC2F648D0FEA647FB75CBADE0A25E0B8</key>
+		<string>https://github.com/Flightphase/ofxTextInputField.git</string>
 		<key>FB5AAAE019CE374EC665B5843F7ECF6E9E231DB4</key>
 		<string>https://github.com/doronrk/SonicFileSystem.git</string>
 	</dict>
@@ -20,7 +22,9 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2DE9C8846D9375EAACFABA8963120E8E7719BAF5</key>
-		<string>../../../../..</string>
+		<string>../../..</string>
+		<key>A6343E16BC2F648D0FEA647FB75CBADE0A25E0B8</key>
+		<string>../../../addons/ofxTextInputField</string>
 		<key>FB5AAAE019CE374EC665B5843F7ECF6E9E231DB4</key>
 		<string>../..</string>
 	</dict>
@@ -38,7 +42,15 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>2DE9C8846D9375EAACFABA8963120E8E7719BAF5</string>
 			<key>IDESourceControlWCCName</key>
-			<string>..</string>
+			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A6343E16BC2F648D0FEA647FB75CBADE0A25E0B8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxTextInputField</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>

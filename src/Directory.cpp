@@ -25,6 +25,7 @@ Directory::Directory(boost::filesystem::path p, float sphereRad, float orbitRad,
     int g = round(ofRandom(0, 255));
     int b = 255 - r - g;
     color = ofColor(r, g, b);
+    radiusConst = (sphereRadius/5.0);
 }
 
 bool Directory::isValid()
@@ -35,6 +36,26 @@ bool Directory::isValid()
     }
     return false;
 }
+
+Directory* Directory::getSubDir(std::string dispname)
+{
+    std::map<std::string,Directory*>::iterator it;
+    it = subDirMap.find(dispname);
+    if (it != subDirMap.end())
+    {
+        return it->second;
+    } else
+    {
+        return nullptr;
+    }
+}
+
+ofVec3f Directory::getPosition()
+{
+    ofVec3f position = orbit->getHeadPosition();
+    return position + center;
+}
+
 
 std::vector<Directory*> Directory::getSubDirs()
 {
@@ -72,7 +93,8 @@ void Directory::updateFiles()
     {
         boost::filesystem::path p = itr->path();
         boost::filesystem::file_status stat = itr->status();
-        float orbitRadius = sphereRadius + (sphereRadius/5.0) * (i + 1);
+        float orbitRadius = sphereRadius + radiusConst * (i + 1);
+
         float angularVelocity;
         if (orbitRadius > sphereRadius)
         {
@@ -106,6 +128,7 @@ void Directory::updateFiles()
             }
         }
     }
+    numSatellites = i;
     filesCached = true;
 }
 
@@ -126,6 +149,11 @@ void Directory::update(float secondsElapsed, int depth)
     {
         subDirs[i]->update(secondsElapsed, depth + 1);
     }
+}
+
+float Directory::getOuterRadius()
+{
+    return numSatellites*radiusConst;
 }
 
 

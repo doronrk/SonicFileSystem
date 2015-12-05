@@ -1,5 +1,4 @@
 Roadmap:
-    - display file names and directory names
     - move to a new directory without user input
     - assign color to each directory and its orbiting sound files
     - move to a new directory with user input

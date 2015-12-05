@@ -26,6 +26,9 @@ public:
     void update(float secondsElapsed, int depth);
     void draw(ofVec3f center, int depth, bool dispNamesOn);
     std::string getDisplayname();
+    Directory* getSubDir(std::string displayName);
+    ofVec3f getPosition();
+    float getOuterRadius();
     
 private:
     void updateFiles();
@@ -43,7 +46,10 @@ private:
     std::vector<Sound*> sounds;
     bool filesCached;
     
+    float radiusConst;
+    
     int maxDepth = 2;
+    int numSatellites;
 };
 
 #endif /* defined(__SonicFileSystem__Directory__) */

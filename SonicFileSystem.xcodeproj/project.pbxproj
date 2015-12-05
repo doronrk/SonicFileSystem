@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5128DD5B1BFC05CB00F1FD72 /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5128DD591BFC05CB00F1FD72 /* Sound.cpp */; };
 		5128DD5E1BFC05D700F1FD72 /* Directory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5128DD5C1BFC05D700F1FD72 /* Directory.cpp */; };
+		5158D96B1C136ECF00503204 /* textInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5158D9691C136ECF00503204 /* textInput.cpp */; };
+		516B57D91C136B31005BC3FD /* ofxTextInputField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 516B57D61C136B31005BC3FD /* ofxTextInputField.cpp */; };
 		51970BFA1BFC4B9A0001D92B /* libsndfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51970BF91BFC4B9A0001D92B /* libsndfile.a */; };
 		51BD60441C09012F00EE7A7C /* Orbit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51BD60421C09012F00EE7A7C /* Orbit.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
@@ -67,6 +69,11 @@
 		5128DD5A1BFC05CB00F1FD72 /* Sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sound.h; sourceTree = "<group>"; };
 		5128DD5C1BFC05D700F1FD72 /* Directory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Directory.cpp; sourceTree = "<group>"; };
 		5128DD5D1BFC05D700F1FD72 /* Directory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Directory.h; sourceTree = "<group>"; };
+		5158D9691C136ECF00503204 /* textInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textInput.cpp; sourceTree = "<group>"; };
+		5158D96A1C136ECF00503204 /* textInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textInput.h; sourceTree = "<group>"; };
+		516B57D61C136B31005BC3FD /* ofxTextInputField.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTextInputField.cpp; sourceTree = "<group>"; };
+		516B57D71C136B31005BC3FD /* ofxTextInputField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTextInputField.h; sourceTree = "<group>"; };
+		516B57D81C136B31005BC3FD /* ofxTextInputFieldFontRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTextInputFieldFontRenderer.h; sourceTree = "<group>"; };
 		51970BF71BFC4B8B0001D92B /* sndfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sndfile.h; path = ../../../../../../../../opt/local/include/sndfile.h; sourceTree = "<group>"; };
 		51970BF81BFC4B8B0001D92B /* sndfile.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = sndfile.hh; path = ../../../../../../../../opt/local/include/sndfile.hh; sourceTree = "<group>"; };
 		51970BF91BFC4B9A0001D92B /* libsndfile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsndfile.a; path = ../../../../../../../../opt/local/lib/libsndfile.a; sourceTree = "<group>"; };
@@ -125,9 +132,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		516B57D41C136B31005BC3FD /* ofxTextInputField */ = {
+			isa = PBXGroup;
+			children = (
+				516B57D51C136B31005BC3FD /* src */,
+			);
+			name = ofxTextInputField;
+			sourceTree = "<group>";
+		};
+		516B57D51C136B31005BC3FD /* src */ = {
+			isa = PBXGroup;
+			children = (
+				516B57D61C136B31005BC3FD /* ofxTextInputField.cpp */,
+				516B57D71C136B31005BC3FD /* ofxTextInputField.h */,
+				516B57D81C136B31005BC3FD /* ofxTextInputFieldFontRenderer.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxTextInputField/src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				516B57D41C136B31005BC3FD /* ofxTextInputField */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -206,6 +233,8 @@
 				5128DD5D1BFC05D700F1FD72 /* Directory.h */,
 				51BD60421C09012F00EE7A7C /* Orbit.cpp */,
 				51BD60431C09012F00EE7A7C /* Orbit.h */,
+				5158D9691C136ECF00503204 /* textInput.cpp */,
+				5158D96A1C136ECF00503204 /* textInput.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -306,6 +335,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5158D96B1C136ECF00503204 /* textInput.cpp in Sources */,
+				516B57D91C136B31005BC3FD /* ofxTextInputField.cpp in Sources */,
 				51BD60441C09012F00EE7A7C /* Orbit.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				5128DD5E1BFC05D700F1FD72 /* Directory.cpp in Sources */,
@@ -476,6 +507,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -569,6 +601,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

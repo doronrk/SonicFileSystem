@@ -6,7 +6,8 @@ using namespace std;
 void ofApp::setup(){
     std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/snare";
     
-    setDirectory(initDir);
+    topDir = new Directory(initDir, 50, 0.0, 0.0);
+    currentDir = topDir;
 
     //Camera setup
     cam.begin();
@@ -27,6 +28,12 @@ void ofApp::setup(){
     globalTimeMS = 0;
     lastUpdateTime = 0;
     dispNamesOn = false;
+    inputMode = false;
+    
+    //////////////////////////
+    //textBox.init();
+    
+    //ofAddListener(textBox.evtEnter, this, &ofApp::addText);
 }
 
 void ofApp::exit()
@@ -35,25 +42,23 @@ void ofApp::exit()
 }
 
 //--------------------------------------------------------------
-void ofApp::setDirectory(std::string path)
-{
-    Directory* newDir = new Directory(path, 50, 0.0, 0.0);
-    std::vector<Sound*> newSounds = newDir->getSounds();
-    delete currentDir;
-    sounds.clear();
-    currentDir = newDir;
-    sounds = newSounds;
-}
-
-//--------------------------------------------------------------
 void ofApp::update()
 {
     float msElapsed = globalTimeMS - lastUpdateTime;
     float secondsElapsed = msElapsed / 1000.0;
     lastUpdateTime = globalTimeMS;
-
+    
     currentDir->update(secondsElapsed, 0);
     
+    ofVec3f dirPosition = currentDir->getPosition();
+        
+    float outerOrbit = currentDir->getOuterRadius();
+    
+    ofVec3f camPos = dirPosition - ofVec3f(outerOrbit*2.0, outerOrbit*2.0, outerOrbit*2.0);
+
+    cam.setPosition(camPos);
+    cam.lookAt(dirPosition);
+
     // update camera position
     
     if (upPress)
@@ -95,6 +100,18 @@ void ofApp::draw(){
     
     ofPopStyle();
     cam.end();
+    
+    
+    //////////////////////////////////
+    //I've left the draw call as manual
+    // but this could also be event driven
+    // like textInput::keyPressed
+    ofPushMatrix();
+    ofScale(5,5);
+    textBox.draw();
+    ofPopMatrix();
+    
+    //drawEntries();
 }
 
 //--------------------------------------------------------------
@@ -125,6 +142,17 @@ void ofApp::keyPressed(int key)
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key)
 {
+    if (inputMode)
+    {
+        if (key == OF_KEY_RETURN)
+        {
+            string text = textBox.getText();
+            handleTextInput(text);
+        } else {
+            textBox.keyPressed(key);
+        }
+        return;
+    }
     if (key == OF_KEY_UP)
     {
         upPress = false;
@@ -140,6 +168,9 @@ void ofApp::keyReleased(int key)
     } else if (key == 'r')
     {
         dispNamesOn = !dispNamesOn;
+    } else if (key == OF_KEY_LEFT_COMMAND || key == OF_KEY_RIGHT_COMMAND)
+    {
+        inputMode = ! inputMode;
     }
 }
 
@@ -178,3 +209,26 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
+
+void ofApp::handleTextInput(string text)
+{
+    int l = text.find("mv ");
+    if (l == 0)
+    {
+        cerr << "mv found" << endl;
+        return;
+    }
+    l = text.find("cd ");
+    if (l == 0)
+    {
+        cerr << "cd found" << endl;
+        return;
+    }
+    l = text.find("pl ");
+    if (l == 0)
+    {
+        cerr << "pl found" << endl;
+        return;
+    }
+}
+

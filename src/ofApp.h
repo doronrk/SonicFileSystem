@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Directory.h"
+#include "textInput.h"
 
 //#define PI 3.14159265
 
@@ -28,13 +29,13 @@ public:
     
 private:
     
-    void setDirectory(std::string path);
+    void handleTextInput(string text);
+    
     ofImage background;
     
     ofEasyCam cam;
+    Directory* topDir;
     Directory* currentDir;
-    std::vector<Sound*> sounds;
-    Sound* targetSound;
     
     bool dispNamesOn;
     bool upPress;
@@ -42,9 +43,20 @@ private:
     bool leftPress;
     bool rightPress;
     
+    bool inputMode;
+    
     float sceneRadius = 500;
     float vertOffSet = -40;
     
     float globalTimeMS;
     float lastUpdateTime;
+    
+    //////////////
+    textInput textBox;
+    
+    /////
+    //for the purpose of this example
+    //vector<string> textEntries;
+    //void addText(string& s);
+    //void drawEntries();
 };
