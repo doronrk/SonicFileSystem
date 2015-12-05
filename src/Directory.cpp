@@ -158,11 +158,16 @@ void Directory::draw(ofVec3f center, int depth, bool dispNamesOn)
             subDirs[i]->draw(position, depth + 1, dispNamesOn);
         }
         
-        
-        if (selectedSound != nullptr)
+        if (depth < 2 && dispNamesOn)
         {
-            selectedSound->drawOrbit();
+            ofPushMatrix();
+            {
+                ofTranslate(position);
+                ofDrawBitmapString(displayName, 0, sphereRadius + 3);
+            }
+            ofPopMatrix();
         }
+        
     }
     ofPopStyle();
 }
