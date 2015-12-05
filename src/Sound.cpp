@@ -73,6 +73,11 @@ void Sound::draw(ofVec3f dirCenter, int depth, bool dispNamesOn)
     ofPopStyle();
 }
 
+void Sound::drawName(ofVec3f center)
+{
+    orbit->drawName(displayName, center);
+}
+
 void Sound::drawOrbit()
 {
     orbit->drawPath();

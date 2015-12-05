@@ -100,6 +100,10 @@ void Orbit::draw(ofVec3f center, const vector<float> data, std::string displayna
         {
             pointIndex = points.size() + pointIndex;
         }
+        if (pointIndex == points.size())
+        {
+            pointIndex = 0;
+        }
         if (previousPointIndex < 0)
         {
             previousPointIndex = points.size() + previousPointIndex;
@@ -111,17 +115,28 @@ void Orbit::draw(ofVec3f center, const vector<float> data, std::string displayna
         wavForm[i] = p;
     }
     wavForm.draw();
-    if (depth == 0 && dispNamesOn)
-    {
-        ofVec3f headPoint = points[head];
-        ofPushMatrix();
-        {
-            ofTranslate(headPoint + center);
-            ofDrawBitmapString(displayname, 0, 0 );
+//    if (depth == 0 && dispNamesOn)
+//    {
+//        ofVec3f headPoint = points[head];
+//        ofPushMatrix();
+//        {
+//            ofTranslate(headPoint + center);
+//            ofDrawBitmapString(displayname, 0, 0 );
+//
+//        }
+//        ofPopMatrix();
+//    }
+}
 
-        }
-        ofPopMatrix();
+void Orbit::drawName(std::string displayname, ofVec3f center)
+{
+    ofVec3f headPoint = points[head];
+    ofPushMatrix();
+    {
+        ofTranslate(headPoint + center);
+        ofDrawBitmapString(displayname, 0, 0);
     }
+    ofPopMatrix();
 }
 
 void Orbit::drawTubes(const std::vector<float> data)

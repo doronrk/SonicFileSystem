@@ -26,6 +26,7 @@ public:
     
     void update(float secondsElapsed);
     void draw(ofVec3f center, const std::vector<float> data, std::string displayname, int depth, bool dispNamesOn);
+    void drawName(std::string displayname, ofVec3f center);
     void drawTubes(const std::vector<float> data);
     void drawPath();
     bool getAndResetCrossedZero();

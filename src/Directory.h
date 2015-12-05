@@ -19,20 +19,24 @@ class Directory
 {
 public:
     Directory(boost::filesystem::path path, float sphereRadius, float orbitRadius,
-              float angularVelocity);
+              float angularVelocity, Directory* parent);
     bool isValid();
     std::vector<Directory*> getSubDirs();
     std::vector<Sound*> getSounds();
     void update(float secondsElapsed, int depth);
     void draw(ofVec3f center, int depth, bool dispNamesOn);
+    void drawName();
+    void drawSatNames();
     std::string getDisplayname();
     Directory* getSubDir(std::string displayName);
+    Directory* getParent();
     ofVec3f getPosition();
     float getOuterRadius();
     
 private:
     void updateFiles();
     
+    Directory* parent;
     ofColor color;
     ofVec3f center;
     Orbit* orbit;

@@ -1,7 +1,4 @@
 Roadmap:
-    - move to a new directory without user input
-    - assign color to each directory and its orbiting sound files
-    - move to a new directory with user input
     - play sound with user input
     - 'capture' sound files
     - cap total number of orbiting bodies

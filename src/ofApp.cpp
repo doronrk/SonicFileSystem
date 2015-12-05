@@ -6,7 +6,7 @@ using namespace std;
 void ofApp::setup(){
     std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/snare";
     
-    topDir = new Directory(initDir, 50, 0.0, 0.0);
+    topDir = new Directory(initDir, 50, 0.0, 0.0, nullptr);
     currentDir = topDir;
 
     //Camera setup
@@ -34,6 +34,8 @@ void ofApp::setup(){
     //textBox.init();
     
     //ofAddListener(textBox.evtEnter, this, &ofApp::addText);
+    
+    cerr << "cam.getFov(): "  << cam.getFov() << endl;
 }
 
 void ofApp::exit()
@@ -48,13 +50,14 @@ void ofApp::update()
     float secondsElapsed = msElapsed / 1000.0;
     lastUpdateTime = globalTimeMS;
     
-    currentDir->update(secondsElapsed, 0);
+    //currentDir->update(secondsElapsed, 0);
+    topDir->update(secondsElapsed, 0);
     
     ofVec3f dirPosition = currentDir->getPosition();
         
     float outerOrbit = currentDir->getOuterRadius();
     
-    ofVec3f camPos = dirPosition - ofVec3f(outerOrbit*2.0, outerOrbit*2.0, outerOrbit*2.0);
+    ofVec3f camPos = dirPosition - ofVec3f(0, outerOrbit, outerOrbit*2);
 
     cam.setPosition(camPos);
     cam.lookAt(dirPosition);
@@ -95,7 +98,13 @@ void ofApp::draw(){
     
     ofPushStyle();
     {
-        currentDir->draw(ofVec3f(0, 0, 0), 0, dispNamesOn);
+        topDir->draw(ofVec3f(0, 0, 0), 0, dispNamesOn);
+        if (dispNamesOn)
+        {
+            currentDir->drawName();
+            currentDir->drawSatNames();
+        }
+        //currentDir->draw(ofVec3f(0, 0, 0), 0, dispNamesOn);
     }
     
     ofPopStyle();
@@ -142,6 +151,11 @@ void ofApp::keyPressed(int key)
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key)
 {
+    if (key == OF_KEY_LEFT_COMMAND || key == OF_KEY_RIGHT_COMMAND)
+    {
+        inputMode = ! inputMode;
+        return;
+    }
     if (inputMode)
     {
         if (key == OF_KEY_RETURN)
@@ -169,9 +183,6 @@ void ofApp::keyReleased(int key)
     } else if (key == 'r')
     {
         dispNamesOn = !dispNamesOn;
-    } else if (key == OF_KEY_LEFT_COMMAND || key == OF_KEY_RIGHT_COMMAND)
-    {
-        inputMode = ! inputMode;
     }
 }
 
@@ -223,10 +234,19 @@ void ofApp::handleTextInput(string text)
     int l = text.find("cd ");
     if (l == 0)
     {
-        Directory* newDir = currentDir->getSubDir(suffix);
-        if (newDir != nullptr)
+        if (suffix.size() == 2 && suffix.find("..") == 0)
         {
-            currentDir = newDir;
+            Directory* parent = currentDir->getParent();
+            if (parent != nullptr)
+            {
+                currentDir = parent;
+            }
+        } else {
+            Directory* newDir = currentDir->getSubDir(suffix);
+            if (newDir != nullptr)
+            {
+                currentDir = newDir;
+            }
         }
         return;
     }

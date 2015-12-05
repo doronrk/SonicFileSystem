@@ -11,8 +11,9 @@
 using namespace boost::filesystem;
 
 Directory::Directory(boost::filesystem::path p, float sphereRad, float orbitRad,
-                     float angularVelocity)
+                     float angularVelocity, Directory* par)
 {
+    parent = par;
     path = p;
     displayName = p.filename().string();
     filesCached = false;
@@ -37,6 +38,11 @@ bool Directory::isValid()
     return false;
 }
 
+Directory* Directory::getParent()
+{
+    return parent;
+}
+
 Directory* Directory::getSubDir(std::string dispname)
 {
     std::map<std::string,Directory*>::iterator it;
@@ -52,8 +58,15 @@ Directory* Directory::getSubDir(std::string dispname)
 
 ofVec3f Directory::getPosition()
 {
-    ofVec3f position = orbit->getHeadPosition();
-    return position + center;
+    if (parent == nullptr)
+    {
+        ofVec3f position = orbit->getHeadPosition();
+        return position + center;
+    }
+    else {
+        ofVec3f position = orbit->getHeadPosition();
+        return position + center + parent->getPosition();
+    }
 }
 
 
@@ -106,7 +119,7 @@ void Directory::updateFiles()
         }
         if (is_directory(stat))
         {
-            Directory* dir = new Directory(p, sphereRadius/3.0, orbitRadius, angularVelocity);
+            Directory* dir = new Directory(p, sphereRadius/3.0, orbitRadius, angularVelocity, this);
             if (dir->isValid())
             {
                 subDirMap.insert(std::pair<std::string, Directory*>(p.filename().string(), dir));
@@ -128,7 +141,7 @@ void Directory::updateFiles()
             }
         }
     }
-    numSatellites = i;
+    numSatellites = i + 1;
     filesCached = true;
 }
 
@@ -153,7 +166,7 @@ void Directory::update(float secondsElapsed, int depth)
 
 float Directory::getOuterRadius()
 {
-    return numSatellites*radiusConst;
+    return numSatellites*radiusConst + sphereRadius;
 }
 
 
@@ -186,18 +199,62 @@ void Directory::draw(ofVec3f center, int depth, bool dispNamesOn)
             subDirs[i]->draw(position, depth + 1, dispNamesOn);
         }
         
-        if (depth < 2 && dispNamesOn)
-        {
-            ofPushMatrix();
-            {
-                ofTranslate(position);
-                ofDrawBitmapString(displayName, 0, sphereRadius + 3);
-            }
-            ofPopMatrix();
-        }
+//        if (depth < 2 && dispNamesOn)
+//        {
+//            ofPushMatrix();
+//            {
+//                ofTranslate(position);
+//                ofDrawBitmapString(displayName, 0, sphereRadius + 3);
+//            }
+//            ofPopMatrix();
+//        }
         
     }
     ofPopStyle();
 }
 
+void Directory::drawName()
+{
+    ofVec3f center;
+    if (parent != nullptr)
+    {
+        center = parent->getPosition();
+    } else {
+        center = ofVec3f(0, 0, 0);
+    }
+    ofVec3f position = orbit->getHeadPosition();
+    position = position + center;
+    ofPushMatrix();
+    {
+        ofTranslate(position);
+        ofDrawBitmapString(displayName, 0, sphereRadius + 3);
+    }
+    ofPopMatrix();
+}
+
+void Directory::drawSatNames()
+{
+    ofVec3f center;
+    if (parent != nullptr)
+    {
+        center = parent->getPosition();
+    } else {
+        center = ofVec3f(0, 0, 0);
+    }
+    ofVec3f position = orbit->getHeadPosition();
+    position = position + center;
+    
+    sounds = getSounds();
+    for (int i = 0; i < sounds.size(); ++i)
+    {
+        sounds[i]->drawName(position);
+    }
+    
+    std::vector<Directory*> subDirs = getSubDirs();
+
+    for (int i = 0; i < subDirs.size(); ++i)
+    {
+        subDirs[i]->drawName();
+    }
+}
 
