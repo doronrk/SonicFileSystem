@@ -12,6 +12,7 @@ void ofApp::setup(){
     //Camera setup
     cam.begin();
     cam.setGlobalPosition(0, 0, 0);
+    camLookAtPoint = ofVec3f(0, 0, 0);
     cam.setFov(60.0);
     cam.end();
     cam.enableMouseInput();
@@ -57,35 +58,15 @@ void ofApp::update()
         
     float outerOrbit = currentDir->getOuterRadius();
     
-    ofVec3f camPos = dirPosition - ofVec3f(0, outerOrbit, outerOrbit*2);
-
-    cam.setPosition(camPos);
-    cam.lookAt(dirPosition);
-
-    // update camera position
+    ofVec3f targetCamPos = dirPosition - ofVec3f(0, outerOrbit, outerOrbit*2);
+    ofVec3f targetLookAt = dirPosition;
     
-    if (upPress)
-    {
-        ofVec3f dir = cam.getLookAtDir();
-        dir = dir.normalize();
-        dir = dir*3;
-        cam.move(dir);
-    }
-    if (downPress)
-    {
-        ofVec3f dir = cam.getLookAtDir();
-        dir = dir.normalize();
-        dir = dir*-3;
-        cam.move(dir);
-    }
-    if (leftPress)
-    {
-        cam.rotate(1, 0, 1, 0);
-    }
-    if (rightPress)
-    {
-        cam.rotate(-1, 0, 1, 0);
-    }
+    ofVec3f currentCamPos = cam.getPosition();
+
+    cam.setPosition(currentCamPos.interpolate(targetCamPos, .1));
+    camLookAtPoint = camLookAtPoint.interpolate(targetLookAt, .2);
+    cam.lookAt(camLookAtPoint);
+
 }
 
 //--------------------------------------------------------------

@@ -51,6 +51,8 @@ private:
     float globalTimeMS;
     float lastUpdateTime;
     
+    ofVec3f camLookAtPoint;
+    
     //////////////
     textInput textBox;
     
