@@ -22,9 +22,9 @@ Directory::Directory(boost::filesystem::path p, float sphereRad, float orbitRad,
     selectedSound = nullptr;
     orbit = new Orbit(orbitRadius, angularVelocity, 100000, 1, 0, 0.0);
     center = ofVec3f(0, 0, 0);
-    int r = round(ofRandom(0, 255));
-    int g = round(ofRandom(0, 255));
-    int b = 255 - r - g;
+    int r = round(ofRandom(40, 255));
+    int g = round(ofRandom(40, 255));
+    int b = round(ofRandom(40, 255));
     color = ofColor(r, g, b);
     radiusConst = (sphereRadius/5.0);
 }
@@ -247,7 +247,7 @@ void Directory::drawName()
     ofPopMatrix();
 }
 
-void Directory::drawSatNames()
+void Directory::drawSoundNames()
 {
     ofVec3f center;
     if (parent != nullptr)
@@ -264,12 +264,27 @@ void Directory::drawSatNames()
     {
         sounds[i]->drawName(position);
     }
+
+}
+
+void Directory::drawSubDirNames()
+{
+    ofVec3f center;
+    if (parent != nullptr)
+    {
+        center = parent->getPosition();
+    } else {
+        center = ofVec3f(0, 0, 0);
+    }
+    ofVec3f position = orbit->getHeadPosition();
+    position = position + center;
     
     std::vector<Directory*> subDirs = getSubDirs();
-
+    
     for (int i = 0; i < subDirs.size(); ++i)
     {
         subDirs[i]->drawName();
     }
+
 }
 

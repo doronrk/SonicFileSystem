@@ -37,7 +37,9 @@ private:
     Directory* topDir;
     Directory* currentDir;
     
-    bool dispNamesOn;
+    //bool dispNamesOn;
+    bool dirNamesOn;
+    bool fileNamesOn;
     bool upPress;
     bool downPress;
     bool leftPress;

@@ -26,13 +26,14 @@ public:
     void update(float secondsElapsed, int depth);
     void draw(ofVec3f center, int depth, bool dispNamesOn);
     void drawName();
-    void drawSatNames();
     std::string getDisplayname();
     Directory* getSubDir(std::string displayName);
     void playSound(std::string displayName);
     Directory* getParent();
     ofVec3f getPosition();
     float getOuterRadius();
+    void drawSubDirNames();
+    void drawSoundNames();
     
 private:
     void updateFiles();

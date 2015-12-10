@@ -8,6 +8,8 @@ void ofApp::setup(){
     
     topDir = new Directory(initDir, 50, 0.0, 0.0, nullptr);
     currentDir = topDir;
+        
+    ofSetFullscreen(true);
 
     //Camera setup
     cam.begin();
@@ -28,13 +30,9 @@ void ofApp::setup(){
     // variable init
     globalTimeMS = 0;
     lastUpdateTime = 0;
-    dispNamesOn = false;
+    dirNamesOn = false;
+    fileNamesOn = false;
     inputMode = false;
-    
-    //////////////////////////
-    //textBox.init();
-    
-    //ofAddListener(textBox.evtEnter, this, &ofApp::addText);
     
     cerr << "cam.getFov(): "  << cam.getFov() << endl;
 }
@@ -66,7 +64,6 @@ void ofApp::update()
     cam.setPosition(currentCamPos.interpolate(targetCamPos, .1));
     camLookAtPoint = camLookAtPoint.interpolate(targetLookAt, .2);
     cam.lookAt(camLookAtPoint);
-
 }
 
 //--------------------------------------------------------------
@@ -79,23 +76,35 @@ void ofApp::draw(){
     
     ofPushStyle();
     {
-        topDir->draw(ofVec3f(0, 0, 0), 0, dispNamesOn);
-        if (dispNamesOn)
+        topDir->draw(ofVec3f(0, 0, 0), 0, dirNamesOn);
+        if (dirNamesOn)
         {
             currentDir->drawName();
-            currentDir->drawSatNames();
+            currentDir->drawSubDirNames();
         }
+        if (fileNamesOn)
+        {
+            currentDir->drawSoundNames();
+        }
+        
         //currentDir->draw(ofVec3f(0, 0, 0), 0, dispNamesOn);
     }
     
     ofPopStyle();
     cam.end();
     
+    if (inputMode)
+    {
+        ofVec3f arrowBegin(20, 45, 0);
+        ofVec3f arrowEnd(45, 45, 0);
+        ofDrawArrow(arrowBegin, arrowEnd);
+        arrowBegin.set(40, 40, 0);
+        ofDrawArrow(arrowBegin, arrowEnd);
+        arrowBegin.set(40, 50, 0);
+        ofDrawArrow(arrowBegin, arrowEnd);
+    }
+
     
-    //////////////////////////////////
-    //I've left the draw call as manual
-    // but this could also be event driven
-    // like textInput::keyPressed
     ofPushMatrix();
     ofScale(5,5);
     textBox.draw();
@@ -161,9 +170,12 @@ void ofApp::keyReleased(int key)
     } else if (key == OF_KEY_RIGHT)
     {
         rightPress = false;
-    } else if (key == 'r')
+    } else if (key == 'd')
     {
-        dispNamesOn = !dispNamesOn;
+        dirNamesOn = !dirNamesOn;
+    } else if (key == 's')
+    {
+        fileNamesOn = !fileNamesOn;
     }
 }
 
