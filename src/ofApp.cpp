@@ -4,7 +4,7 @@ using namespace std;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/snare";
+    std::string initDir = "/Users/Doron/Documents/Developer/openFrameworks/apps/myApps/SonicFileSystem/initDir/samples";
     
     topDir = new Directory(initDir, 50, 0.0, 0.0, nullptr);
     currentDir = topDir;
@@ -60,9 +60,15 @@ void ofApp::update()
     ofVec3f targetLookAt = dirPosition;
     
     ofVec3f currentCamPos = cam.getPosition();
-
-    cam.setPosition(currentCamPos.interpolate(targetCamPos, .1));
-    camLookAtPoint = camLookAtPoint.interpolate(targetLookAt, .2);
+    
+    float interpAmount = secondsElapsed*5;
+    if (interpAmount > 1.0)
+    {
+        interpAmount = 1.0;
+    }
+    
+    cam.setPosition(currentCamPos.interpolate(targetCamPos, interpAmount));
+    camLookAtPoint = camLookAtPoint.interpolate(targetLookAt, interpAmount);
     cam.lookAt(camLookAtPoint);
 }
 
