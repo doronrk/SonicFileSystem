@@ -9,19 +9,34 @@
   <title>This is the Sonic File System</title>
   <div>	
     <a href="https://github.com/doronrk/SonicFileSystem">source code</a> <br> 
-    <a href="https://github.com/doronrk/TouchSequencer/blob/master/README.md">README (Architecture, Building, Usage)</a> <br>
-    <a href="https://youtu.be/bWSKySZzInk">Musical Statement (Demonstration)</a> 
 <br>
 
-<img width="800" height="550" src="images/node.jpg"></img>
-    
-<p>Idea behind the Node Sequencer
-    <br> - Create nodes and playheads through the trackpad.
-    <br> - In node mode, tapping the touchpad creates nodes.
-    <br> - In playhead mode, swiping the touchpad creates playhead with the direction and velocity of the swipe.  
-    <br> - Sends OSC to Max for Live to render the sound.
+<p>Motivation
+    <br> - Searching for the right sound through a file system tedious and can often impede the creative process.
+    <br> - SonicFileSystem is a first pass at creating an interactive, aesthetically pleasing environment for browsing sound files.
+    <br> - In order to take advantage of the user's existing familiarity with their file system, the structure of the file system is used to determine the orbits.
+    <br> - The environment is also navigable using familiar command line instructions detailed in the user guide.
 </p>
-</div>
+
+<p>User guide
+    <br> - Press 'command' to toggle command line mode on and off
+    <br> - When in command line mode 
+    <br> &nbsp; - 'cd [directory]' navigates to that directory
+    <br> &nbsp; - 'cd ..' navigates to the parent directory
+    <br> &nbsp; - 'pl [filename]' plays the file
+    <br> - When not in command line mode 
+    <br> &nbsp; - 'd' toggles the display of directory names
+    <br> &nbsp; - 's' toggles the display of file names
+</p>
+
+<img width="800" height="550" src="images/sfs1.jpg"></img>
+<br>
+<img width="800" height="550" src="images/sfs2.jpg"></img>
+<br>
+<img width="800" height="550" src="images/sfs3.jpg"></img>
+<br>
+    
+
       
 </body>
 </html>

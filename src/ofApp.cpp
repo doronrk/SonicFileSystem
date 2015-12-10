@@ -17,7 +17,7 @@ void ofApp::setup(){
     camLookAtPoint = ofVec3f(0, 0, 0);
     cam.setFov(60.0);
     cam.end();
-    cam.enableMouseInput();
+    cam.disableMouseInput();
     
     // audio setup
     ofSoundStreamSetup(0, 2, 44100, 256, 4);
@@ -33,8 +33,6 @@ void ofApp::setup(){
     dirNamesOn = false;
     fileNamesOn = false;
     inputMode = false;
-    
-    cerr << "cam.getFov(): "  << cam.getFov() << endl;
 }
 
 void ofApp::exit()
