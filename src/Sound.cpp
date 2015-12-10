@@ -11,7 +11,7 @@
 using namespace std;
 
 Sound::Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath,
-             float orbitRadius, float angularVelocity, std::string dispName)
+             float orbitRadius, float angularVelocity, std::string dispName, ofColor baseCol)
 {
     displayName = dispName;
     dataInitialized = false;
@@ -20,6 +20,7 @@ Sound::Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath,
     float lfoGain = orbitRadius/100.0;
     initData(sndFile);
     orbit = new Orbit(orbitRadius, angularVelocity, nFrames, 5, 20, lfoGain);
+    baseColor = ofVec3f(baseCol.r, baseCol.g, baseCol.b);
 }
 
 Sound::~Sound()
@@ -52,6 +53,8 @@ void Sound::initData(SndfileHandle sndFile)
 void Sound::update(float secondsElapsed)
 {
     orbit->update(secondsElapsed);
+    currentColor = currentColor.interpolate(baseColor, secondsElapsed);
+    //currentColor = currentColor.interpolate(0.1);
 }
 
 void Sound::draw(ofVec3f dirCenter, int depth, bool dispNamesOn)
@@ -62,6 +65,7 @@ void Sound::draw(ofVec3f dirCenter, int depth, bool dispNamesOn)
     }
     ofPushStyle();
     {
+        ofSetColor(currentColor.x, currentColor.y, currentColor.z);
         vector<float> d = data[0];
         orbit->draw(dirCenter, d, displayName, depth, dispNamesOn);
     }
@@ -80,5 +84,6 @@ void Sound::drawOrbit()
 
 void Sound::playSound()
 {
+    currentColor = ofVec3f(255, 255, 255);
     player->play();
 }

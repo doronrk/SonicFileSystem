@@ -19,7 +19,7 @@ class Sound
 {
 public:
     Sound(SndfileHandle sndFile, boost::filesystem::path sndFilePath, float orbitRadius,
-          float angularVelocity, std::string displayName);
+          float angularVelocity, std::string displayName, ofColor baseColor);
 
     ~Sound();
     void update(float secondsElapsed);
@@ -37,6 +37,8 @@ private:
     int nChannels;
     int nFrames;
     bool dataInitialized;
+    ofVec3f baseColor;
+    ofVec3f currentColor;
 };
 
 #endif /* defined(__SonicFileSystem__Sound__) */

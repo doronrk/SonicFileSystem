@@ -150,7 +150,7 @@ void Directory::updateFiles()
             int error = myf.error();
             if (error == 0)
             {
-                Sound* s = new Sound(myf, p, orbitRadius, angularVelocity, p.filename().string());
+                Sound* s = new Sound(myf, p, orbitRadius, angularVelocity, p.filename().string(), color);
                 soundMap.insert(std::pair<std::string, Sound*>(p.filename().string(), s));
                 i = i + 1;
             }
