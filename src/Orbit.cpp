@@ -63,6 +63,10 @@ void Orbit::update(float secondsElapsed)
     }
     float progress = headAngle / (2 * PI);
     head = round(progress * points.size());
+    if (head >= points.size())
+    {
+        head = head - points.size();
+    }
 }
 
 bool Orbit::getAndResetCrossedZero()
